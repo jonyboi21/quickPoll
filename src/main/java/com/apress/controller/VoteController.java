@@ -1,9 +1,6 @@
 package com.apress.controller;
 
-import com.apress.domain.Poll;
 import com.apress.domain.Vote;
-import com.apress.exception.ResourceNotFoundException;
-import com.apress.repository.VoteRepository;
 import com.apress.service.PollService;
 import com.apress.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +35,14 @@ public class VoteController {
         return voteService.getVotes(pollId);
     }
 
-//    @RequestMapping(value = "/polls/{voteId}/votes", method = RequestMethod.DELETE)
-//    public ResponseEntity<?> deleteVote(@PathVariable Long voteId){
-//
-//        return voteService.deleteVotes(voteId);
-//    }
-
+    @RequestMapping(value = "/polls/votes/{voteId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteVote(@PathVariable Long voteId){
+        voteService.deleteVotes(voteId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "/polls/{pollId}/votes/{voteId}", method =RequestMethod.GET)
+    public Optional<Vote> getASingleVote(@PathVariable Long pollId){
+        return voteService.getAVote(pollId);
+    }
 
 }
